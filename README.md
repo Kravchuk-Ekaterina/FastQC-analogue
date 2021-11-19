@@ -1,7 +1,7 @@
 # FastQC-analogue
 Implementation of an analogue of the FastQC program <br>
 
-FastQC aims to provide a simple way to do some quality control checks on raw sequence data coming from high throughput sequencing pipelines. It provides a modular set of analyses which you can use to give a quick impression of whether your data has any problems of which you should be aware before doing any further analysis. You can find more informatio here: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/ <br>
+FastQC aims to provide a simple way to do some quality control checks on raw sequence data coming from high throughput sequencing pipelines. It provides a modular set of analyses which you can use to give a quick impression of whether your data has any problems of which you should be aware before doing any further analysis. You can find more information here: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/ <br>
 
 The goal is to implement the programm which is analoge of the FastQC <br>
 
@@ -41,8 +41,10 @@ python -m pip install -r requirements.txt
 
 6) Finally launch snail_fastqc.py
 
-### Launching snail_fastqc.py
 ```bash
 python snail_fastqc.py --i (--input) input_file.fastq -o (--outdir) dir_to_save_output/
 ```
+### Here is the help message for the programm:
+![help](./pictures/help.jpg "help")
+
 
