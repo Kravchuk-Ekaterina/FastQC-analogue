@@ -97,3 +97,31 @@ with open(Filename + '_Basic_Statistics.tsv', 'wt') as out_file:
 
 print('Calculated basic Statistics...')
 
+# Overrepresented sequences
+
+len_seq_lines = len(seq_lines)
+count_seqs = {}
+unique_seqs = list(set(seq_lines))
+for line in unique_seqs[0:200]:
+    n = seq_lines.count(line)
+    count_seqs[line] = n
+
+status = 'Green (entirely normal)'
+over_seqs = {}
+for key in count_seqs:
+    if count_seqs[key]/len_seq_lines > 0.001:
+        status = 'Orange (slightly abnormal)'
+        over_seqs[key] = count_seqs[key]
+    if n/len_seq_lines > 0.01:
+        status = 'Red (very unusual)'
+
+with open(Filename + '_Overrepresented_sequences.tsv', 'wt') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    tsv_writer.writerow(['Status', status])
+    if status != 'Green (entirely normal)':
+        tsv_writer.writerow(['Sequence', 'Count', 'Percentage'])
+        for key in over_seqs:
+            tsv_writer.writerow([key, over_seqs[key], 100*over_seqs[key]/len_seq_lines])
+
+print('Finished searching for overrepresented sequences...')
+
