@@ -3,6 +3,10 @@
 import argparse
 import os
 import csv
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Parser for command line options
 from argparse import ArgumentParser
@@ -95,11 +99,50 @@ with open(Filename + '_Basic_Statistics.tsv', 'wt') as out_file:
     tsv_writer.writerow(['Sequence Length', Sequence_Length])
     tsv_writer.writerow(['%GC', GC])
 
-print('Calculated basic Statistics...')
+print('Calculated Basic Statistics...')
+
+# Per Sequence Quality Scores
+
+def average_score(lst):
+    plus = 0
+    qual_list = []
+    if Encoding == 'Solexa / Illumina 1.0':
+        plus = 26
+    if Encoding == 'Illumina 1.3-1.8':
+        plus = 31
+    delta = 33 + plus
+    for line in lst:
+        quality = line.strip()
+        sum_q = 0
+        for j in quality:
+            sum_q += (ord(j) - delta)
+        mean_quality = sum_q/len(quality)
+        qual_list.append(mean_quality)
+    return qual_list
+
+
+qual_list = average_score(qual_lines)
+
+med = np.median(qual_list)
+status = 'Green (entirely normal)'
+col ='green'
+if med < 27:
+    status = 'Orange (slightly abnormal)'
+    col = 'orange'
+if med < 20:
+    status = 'Red (very unusual)'
+    col = 'red'
+
+x, y = np.unique(qual_list, return_counts = True)
+plt.plot(x, y, color = col)
+plt.title('Per Sequence Quality Scores Destribution')
+plt.suptitle(status)
+plt.savefig(Filename + '_per_seq_qscore.png')
+
+print('Calculated Per Sequence Quality Scores... ')
 
 # Overrepresented sequences
 
-len_seq_lines = len(seq_lines)
 count_seqs = {}
 unique_seqs = list(set(seq_lines))
 for line in unique_seqs[0:200]:
@@ -108,6 +151,7 @@ for line in unique_seqs[0:200]:
 
 status = 'Green (entirely normal)'
 over_seqs = {}
+len_seq_lines = len(seq_lines)
 for key in count_seqs:
     if count_seqs[key]/len_seq_lines > 0.001:
         status = 'Orange (slightly abnormal)'

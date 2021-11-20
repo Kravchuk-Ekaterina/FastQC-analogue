@@ -53,12 +53,18 @@ python snail_fastqc.py --i (--input) input_file.fastq -o (--outdir) dir_to_save_
 
 The programm outputs the following files:
 1) input_file_name_Basic_Statistics.tsv
-2) input_file_name_Overrepresented_sequences.tsv
+2) input_file_name_per_seq_qscore.png
+3) input_file_name_Overrepresented_sequences.tsv
 
 ### Basic Statistics
 The data contains in input_file_name_Basic_Statistics.tsv. <br>
 In the file you can find information about the input file name, file type, encoding, sequence length ang gc content.
 
+### Per Sequence Quality Scores
+input_file_name_per_seq_qscore.png shows per sequence Q-score destribution <br>
+The status is 'Green (entirely normal)' if the per sequence quality score is satisfactory, 'Orange (slightly abnormal)' if the most frequently observed mean quality is below 27 - this equates
+to a 0.2% error rate, 'Red (very unusual)' if the most frequently observed mean quality is below 20 - this equates to a 1% error rate.
+
 ### Overrepresented Sequences
 This module lists all of the sequence which make up more than 0.1% of the total. To conserve memory only sequences which appear in the first 20000 sequences are tracked to the end of the file.It is therefore possible that a sequence which is overrepresented but doesn't appear at the start of the file for some reason could be missed by this module.<br>
-The status is 'Green (entirely normal)' if there is no overrepresented sequences, 'Orange (slightly abnormal)', 
+The status is 'Green (entirely normal)' if there is no overrepresented sequences, 'Orange (slightly abnormal)' if any sequence is found to represent more than 0.1% of the total, 'Red (very unusual)' if any sequence is found to represent more than 1% of the total.
