@@ -135,11 +135,46 @@ if med < 20:
 
 x, y = np.unique(qual_list, return_counts = True)
 plt.plot(x, y, color = col)
-plt.title('Per Sequence Quality Scores Destribution')
+plt.title('Per Sequence Quality Scores Distribution')
 plt.suptitle(status)
 plt.savefig(Filename + '_per_seq_qscore.png')
 
 print('Calculated Per Sequence Quality Scores... ')
+
+# Sequence Length Distribution
+
+len_list = []
+for line in seq_lines:
+    len_list.append(len(line))
+
+status = 'Green (entirely normal)'
+col ='green'
+if len(set(len_list)) > 1:
+    status = 'Orange (slightly abnormal)'
+    col = 'orange'
+if 0 in len_list:
+    status = 'Red (very unusual)'
+    col = 'red'
+
+x, y = np.unique(len_list, return_counts = True)
+x = x.tolist()
+y = y.tolist()
+xs = [x[0]-1]
+for i in x:
+    xs.append(i)
+xs.append(x[-1]+1)
+ys = [0]
+for i in y:
+    ys.append(i)
+ys.append(0)
+
+plt.plot(xs, ys, color = col)
+plt.xlim(xs[0], xs[-1])
+plt.title('Sequence Length Distribution')
+plt.suptitle(status)
+plt.savefig(Filename + '_seq_len_distribution.png')
+
+print('Calculated Sequence Length Distribution... ')
 
 # Overrepresented sequences
 
