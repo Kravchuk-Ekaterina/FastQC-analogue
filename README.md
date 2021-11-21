@@ -55,7 +55,8 @@ The programm outputs the following files:
 1) input_file_name_Basic_Statistics.tsv
 2) input_file_name_per_seq_qscore.png
 3) input_file_name_seq_len_distribution.png
-4) input_file_name_Overrepresented_sequences.tsv
+4) input_file_name_duplicate_seq.png
+5) input_file_name_Overrepresented_sequences.tsv
 
 ### Basic Statistics
 The data contains in input_file_name_Basic_Statistics.tsv. <br>
@@ -69,6 +70,10 @@ to a 0.2% error rate, 'Red (very unusual)' if the most frequently observed mean 
 ### Sequence Length Distribution
 input_file_name_seq_len_distribution.png shows sequence length destribution <br>
 The status is 'Green (entirely normal)' if all the reads have the same length, 'Orange (slightly abnormal)' if all sequences are not the same length, 'Red (very unusual)' any of the sequences have zero length.
+
+### Duplicate Sequences
+input_file_name_duplicate_seq.png contains sequence duplication level distribution <br>
+The status is 'Green (entirely normal)' if the feature is satisfactory, 'Orange (slightly abnormal)' if non-unique sequences make up more than 20% of the total, 'Red (very unusual)' if non-unique sequences make up more than 50% of the total.
 
 ### Overrepresented Sequences
 This module lists all of the sequence which make up more than 0.1% of the total. To conserve memory only sequences which appear in the first 20000 sequences are tracked to the end of the file.It is therefore possible that a sequence which is overrepresented but doesn't appear at the start of the file for some reason could be missed by this module.<br>
